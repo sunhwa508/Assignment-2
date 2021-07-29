@@ -2,6 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,react
 
+
 ### react ###
 .DS_*
 *.log
@@ -18,6 +19,7 @@ psd
 thumb
 sketch
 
+build/*
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
