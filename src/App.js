@@ -2,15 +2,15 @@ import React from "react";
 import "./App.css";
 import { Header, Footer } from "./components";
 import ProductPage from "./pages/homepage/ProductPage";
-
+import { Layout } from "./layout/layout";
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <Layout>
         <Header />
         <ProductPage />
-        <Footer />
-      </div>
+        {/* <Footer /> */}
+      </Layout>
     );
   }
 }

@@ -5,6 +5,7 @@ import { ProductDetails } from "../../components";
 import data from "../../assets/data.json";
 import { storagePropsManager } from "../../config/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
+import { Layout } from "../../layout/layout";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -47,19 +48,16 @@ class ProductPage extends React.Component {
     this.setState(pre => {
       const timeStamp = new Date().setHours(24, 0, 0, 0);
       const notInterested = pre.notInterested.concat({ ...item, timeStamp });
+      storagePropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, notInterested);
       return { notInterested };
     });
 
-    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, this.state.notInterested);
     this.onGetRandomItem(item);
   };
 
   render() {
     return (
       <>
-        <Link to="/recentList">
-          <h2>고객이 보고 싶은 상품</h2>
-        </Link>
         <Switch>
           <Route exact path="/">
             <Redirect to="/recentList" />
