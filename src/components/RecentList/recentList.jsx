@@ -11,9 +11,8 @@ class RecentList extends React.Component {
     return (
       <>
         {this.props.abc.map(item => (
-          <>
+          <div key={shortid.generate()}>
             <Link
-              key={shortid.generate()}
               to={`/product`}
               onClick={() => {
                 this.props.onClick(item);
@@ -22,7 +21,7 @@ class RecentList extends React.Component {
               {item.title}
             </Link>
             <br />
-          </>
+          </div>
         ))}
       </>
     );
