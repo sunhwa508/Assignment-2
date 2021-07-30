@@ -17,8 +17,60 @@ class ProductPage extends React.Component {
         storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) === null
           ? []
           : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM),
+      selectedBrands: this.makeBrands(data),
+      isInterested: false,
     };
   }
+
+  onChange = (e, index = null) => {
+    const name = e.target.name;
+    switch (name) {
+      case "selectedBrands":
+        this.setState(pre => ({
+          ...pre,
+          [name]: pre.selectedBrands.map((c, i) => (index === i ? { ...c, selected: !c.selected } : c)),
+        }));
+        break;
+      case "isInterested":
+        this.setState(pre => ({
+          ...pre,
+          [name]: !pre[name],
+        }));
+        break;
+    }
+  };
+
+  onFilter = () => {
+    let filterProducts = this.state.products;
+    const isChecked = this.state.selectedBrands.some(p => p.selected === true);
+    const notInterested =
+      storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) === null
+        ? []
+        : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM);
+    if (this.state.isInterested && notInterested) {
+      filterProducts = filterProducts.filter(product => !notInterested.some(notPro => product.title === notPro.title));
+    }
+    if (isChecked) {
+      filterProducts = filterProducts.filter(product => {
+        return this.state.selectedBrands.some(c => c.brandName === product.brand && c.selected);
+      });
+    }
+
+    return filterProducts;
+  };
+
+  makeBrands = products => {
+    const brandNames = new Set(products.map(product => product.brand));
+    const selectedBrands = [...brandNames].map(name => ({
+      brandName: name,
+      selected: false,
+    }));
+    return selectedBrands;
+  };
+
+  isBlock = item => {
+    return this.state.notInterested.some(product => product.title === item.title);
+  };
 
   onClick = item => {
     this.setState(pre => ({
@@ -56,21 +108,37 @@ class ProductPage extends React.Component {
   };
 
   render() {
+    const filterProducts = this.onFilter();
     return (
       <>
         <Switch>
           <Route exact path="/">
             <Redirect to="/recentList" />
           </Route>
-          <Route exact path="/recentList" render={() => <RecentList abc={this.state.products} onClick={this.onClick} />}></Route>
+          <Route
+            path="/recentList"
+            render={routeProps => (
+              <RecentList
+                isBlock={this.isBlock}
+                onChange={this.onChange}
+                isInterested={this.state.isInterested}
+                selectedBrands={this.state.selectedBrands}
+                abc={filterProducts}
+                onClick={this.onClick}
+                {...routeProps}
+              />
+            )}
+          ></Route>
+
           <Route
             path="/product"
-            render={() => (
+            render={routeProps => (
               <ProductDetails
                 target={this.state.target}
                 notInterested={this.state.notInterested}
                 onSetNotInterestedItem={this.onSetNotInterestedItem}
                 onGetRandomItem={this.onGetRandomItem}
+                {...routeProps}
               />
             )}
           ></Route>
