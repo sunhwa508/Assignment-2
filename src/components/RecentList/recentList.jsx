@@ -1,7 +1,8 @@
 import React from "react";
 import shortid from "shortid";
+import { Link } from "react-router-dom";
 
-class RecentList extends React.Component {
+class RecentList extends React.PureComponent {
   constructor(props) {
     super(props);
   }
@@ -36,18 +37,14 @@ class RecentList extends React.Component {
         />
         {this.props.abc.map(item => (
           <div key={shortid.generate()}>
-            <div
+            <Link
+              to="/product"
               onClick={() => {
-                if (isBlock(item)) {
-                  alert("경고 메세지!!");
-                  return;
-                }
                 onClick(item);
-                this.props.history.push("/product");
               }}
             >
               {item.title}
-            </div>
+            </Link>
             <br />
           </div>
         ))}

@@ -126,6 +126,7 @@ class ProductPage extends React.Component {
             path="/product"
             render={routeProps => (
               <ProductDetails
+                isBlock={this.isBlock}
                 target={this.state.target}
                 notInterested={this.state.notInterested}
                 onSetNotInterestedItem={this.onSetNotInterestedItem}
