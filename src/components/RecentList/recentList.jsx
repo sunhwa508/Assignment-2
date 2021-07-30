@@ -1,14 +1,25 @@
 import React from "react";
-import data from "../../assets/data";
+
 import { Link } from "react-router-dom";
 
 class RecentList extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
   render() {
     return (
       <>
-        {data.map(item => (
+        {this.props.abc.map(item => (
           <>
-            <Link to={`/product/${item.id}`}>{item.title}</Link>
+            <Link
+              to={`/product`}
+              onClick={() => {
+                this.props.onClick(item);
+              }}
+            >
+              {item.title}
+            </Link>
             <br />
           </>
         ))}
