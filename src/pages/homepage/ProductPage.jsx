@@ -45,7 +45,7 @@ class ProductPage extends React.Component {
 
   onSetNotInterestedItem = item => {
     this.setState(pre => {
-      const timeStamp = new Date().getTime();
+      const timeStamp = new Date().setHours(24, 0, 0, 0);
       const notInterested = pre.notInterested.concat({ ...item, timeStamp });
       return { notInterested };
     });
