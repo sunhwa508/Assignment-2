@@ -12,21 +12,26 @@ class ProductPage extends React.Component {
     this.state = {
       products: data,
       target: null,
+      notInterested:
+        itemPropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) === null
+          ? []
+          : itemPropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM),
     };
   }
 
   onClick = item => {
-    itemPropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, item);
-
     this.setState(pre => ({
       ...pre,
       target: item,
     }));
+    itemPropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, item);
   };
 
   generateRandomItem = item => {
     let num = Math.floor(Math.random() * data.length);
-    return num === data.findIndex(i => i.title === item.title) ? this.generateRandomItem(item) : data[num];
+    return num === data.findIndex(i => i.title === item.title) && data.filter(item => this.state.notInterested.includes(item))
+      ? this.generateRandomItem(item)
+      : data[num];
   };
 
   onGetRandomItem = item => {
@@ -36,6 +41,17 @@ class ProductPage extends React.Component {
     }));
 
     itemPropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, this.generateRandomItem(item));
+  };
+
+  onSetNotInterestedItem = item => {
+    this.setState(pre => {
+      const timeStamp = new Date().getTime();
+      const notInterested = pre.notInterested.concat({ ...item, timeStamp });
+      return { notInterested };
+    });
+
+    itemPropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, this.state.notInterested);
+    this.onGetRandomItem(item);
   };
 
   render() {
@@ -49,7 +65,17 @@ class ProductPage extends React.Component {
             <Redirect to="/recentList" />
           </Route>
           <Route exact path="/recentList" render={() => <RecentList abc={this.state.products} onClick={this.onClick} />}></Route>
-          <Route path="/product" render={() => <ProductDetails target={this.state.target} onGetRandomItem={this.onGetRandomItem} />}></Route>
+          <Route
+            path="/product"
+            render={() => (
+              <ProductDetails
+                target={this.state.target}
+                notInterested={this.state.notInterested}
+                onSetNotInterestedItem={this.onSetNotInterestedItem}
+                onGetRandomItem={this.onGetRandomItem}
+              />
+            )}
+          ></Route>
         </Switch>
       </>
     );

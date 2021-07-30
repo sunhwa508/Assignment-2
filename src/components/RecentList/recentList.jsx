@@ -1,6 +1,6 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
+import shortid from "shortid";
 
 class RecentList extends React.Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class RecentList extends React.Component {
         {this.props.abc.map(item => (
           <>
             <Link
+              key={shortid.generate()}
               to={`/product`}
               onClick={() => {
                 this.props.onClick(item);
