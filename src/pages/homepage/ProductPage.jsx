@@ -3,7 +3,7 @@ import { RecentList } from "../../components";
 import { Route, Link, Switch, Redirect } from "react-router-dom";
 import { ProductDetails } from "../../components";
 import data from "../../assets/data.json";
-import { itemPropsManager } from "../../config/itemManager";
+import { storagePropsManager } from "../../config/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
 
 class ProductPage extends React.Component {
@@ -13,9 +13,9 @@ class ProductPage extends React.Component {
       products: data,
       target: null,
       notInterested:
-        itemPropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) === null
+        storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) === null
           ? []
-          : itemPropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM),
+          : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM),
     };
   }
 
@@ -24,7 +24,7 @@ class ProductPage extends React.Component {
       ...pre,
       target: item,
     }));
-    itemPropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, item);
+    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, item);
   };
 
   generateRandomItem = item => {
@@ -40,7 +40,7 @@ class ProductPage extends React.Component {
       target: this.generateRandomItem(item),
     }));
 
-    itemPropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, this.generateRandomItem(item));
+    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, this.generateRandomItem(item));
   };
 
   onSetNotInterestedItem = item => {
@@ -50,7 +50,7 @@ class ProductPage extends React.Component {
       return { notInterested };
     });
 
-    itemPropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, this.state.notInterested);
+    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, this.state.notInterested);
     this.onGetRandomItem(item);
   };
 

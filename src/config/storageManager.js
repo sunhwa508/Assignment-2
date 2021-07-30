@@ -45,7 +45,7 @@ const clearItemProps = storageKey => {
   localStorage.removeItem(storageKey);
 };
 
-export const itemPropsManager = {
+export const storagePropsManager = {
   convertItemProps,
   parseItemInfo,
   clearItemProps,

@@ -1,10 +1,10 @@
 import React from "react";
-import { itemPropsManager } from "../../config/itemManager";
+import { storagePropsManager } from "../../config/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
 
 class ProductDetails extends React.Component {
   render() {
-    const selectedItem = itemPropsManager.getItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM);
+    const selectedItem = storagePropsManager.getItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM);
 
     return (
       <>
