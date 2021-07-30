@@ -1,6 +1,13 @@
 import React from "react";
-
+import { itemPropsManager } from "../../config/itemManager";
 class ProductDetails extends React.Component {
+  onClick = item => {
+    this.setState(pre => ({
+      ...pre,
+      target: item,
+    }));
+  };
+
   render() {
     const selectedItem = itemPropsManager.getItemProps();
 

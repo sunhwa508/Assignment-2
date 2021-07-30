@@ -16,6 +16,7 @@ class ProductPage extends React.Component {
 
   onClick = item => {
     itemPropsManager.setItemProps(item);
+
     this.setState(pre => ({
       ...pre,
       target: item,
