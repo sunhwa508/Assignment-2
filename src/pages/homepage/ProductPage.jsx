@@ -4,6 +4,7 @@ import { Route, Link, Switch, Redirect } from "react-router-dom";
 import { ProductDetails } from "../../components";
 import data from "../../assets/data.json";
 import { itemPropsManager } from "../../config/itemManager";
+import { STORAGE_KEY_NAMES } from "../../constants";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class ProductPage extends React.Component {
   }
 
   onClick = item => {
-    itemPropsManager.setItemProps(item);
+    itemPropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, item);
 
     this.setState(pre => ({
       ...pre,
@@ -25,7 +26,7 @@ class ProductPage extends React.Component {
 
   generateRandomItem = item => {
     let num = Math.floor(Math.random() * data.length);
-    return num === data.findIndex(i => i.title === item.title) ? this.generateRandom(item) : data[num];
+    return num === data.findIndex(i => i.title === item.title) ? this.generateRandomItem(item) : data[num];
   };
 
   onGetRandomItem = item => {
@@ -34,7 +35,7 @@ class ProductPage extends React.Component {
       target: this.generateRandomItem(item),
     }));
 
-    itemPropsManager.setItemProps(this.generateRandomItem(item));
+    itemPropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, this.generateRandomItem(item));
   };
 
   render() {

@@ -1,34 +1,31 @@
-export const STORAGE_KEY_NAMES = {
-  SELECTED_ITEM: "SELECTED_ITEM",
-};
-
 /**
- * selected item 정보를 string 으로 변환
+ * itemProps를 string 으로 변환
  * @param itemProps
  */
 const convertItemProps = itemProps => JSON.stringify(itemProps);
 
 /**
- * selected item 정보를 itemProps Object 로 변환
+ * itemProps 를 Object 로 변환
  * @param itemProps
  */
 const parseItemInfo = itemProps => JSON.parse(itemProps);
 
 /**
- * selected item 정보를 저장, localStorage에 저장
- * @param clientProps
+ * storageKey의 itemProps 를 localStorage에 저장
+ * @param storageKey itemProps
  */
-const setItemProps = itemProps => {
+const setItemProps = (storageKey, itemProps) => {
   const convertedItemsProps = convertItemProps(itemProps);
-  localStorage.removeItem(STORAGE_KEY_NAMES.SELECTED_ITEM);
-  localStorage.setItem(STORAGE_KEY_NAMES.SELECTED_ITEM, convertedItemsProps);
+  localStorage.removeItem(storageKey);
+  localStorage.setItem(storageKey, convertedItemsProps);
 };
 
 /**
- * localStorage에 저장된 클라이언트를 반환 하는 함수
+ * localStorage에 저장된 값를 반환 하는 함수
+ * @param storageKey
  */
-const getItemProps = () => {
-  const selectedItem = localStorage.getItem(STORAGE_KEY_NAMES.SELECTED_ITEM);
+const getItemProps = storageKey => {
+  const selectedItem = localStorage.getItem(storageKey);
   if (selectedItem) {
     try {
       return parseItemInfo(selectedItem);
@@ -40,8 +37,12 @@ const getItemProps = () => {
   return null;
 };
 
-const clearItemProps = () => {
-  localStorage.removeItem(STORAGE_KEY_NAMES.SELECTED_ITEM);
+/**
+ * localStorage에 저장된 값 초기화
+ * @param storageKey
+ */
+const clearItemProps = storageKey => {
+  localStorage.removeItem(storageKey);
 };
 
 export const itemPropsManager = {

@@ -1,0 +1,3 @@
+export const STORAGE_KEY_NAMES = {
+  SELECTED_ITEM: "SELECTED_ITEM",
+};
