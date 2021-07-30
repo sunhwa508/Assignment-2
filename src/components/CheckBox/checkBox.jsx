@@ -1,4 +1,5 @@
 import React from "react";
+import * as Styled from "./checkBox.styles";
 
 class CheckBox extends React.Component {
   constructor(props) {
@@ -6,12 +7,14 @@ class CheckBox extends React.Component {
   }
 
   render() {
-    const { htmlFor, key, id, name, checked, onChange, text } = this.props;
+    const { key, id, name, checked, onChange, text } = this.props;
     return (
-      <>
-        <label htmlFor={htmlFor}>{text}</label>
+      <Styled.Wrapper>
         <input onChange={onChange} key={key} id={id} type="checkbox" name={name} checked={checked} />
-      </>
+        <label htmlFor={id}>
+          <Styled.Span OnTagSelected={checked}>{text}</Styled.Span>
+        </label>
+      </Styled.Wrapper>
     );
   }
 }
