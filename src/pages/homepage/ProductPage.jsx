@@ -1,11 +1,10 @@
 import React from "react";
 import { RecentList } from "../../components";
-import { Route, Link, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { ProductDetails } from "../../components";
 import data from "../../assets/data.json";
 import { storagePropsManager } from "../../config/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
-import { Layout } from "../../layout/layout";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -13,14 +12,14 @@ class ProductPage extends React.Component {
     this.state = {
       products: data,
       target: null,
-      notInterested:
-        storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) === null
-          ? []
-          : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM),
       selectedBrands: this.makeBrands(data),
       isInterested: false,
     };
   }
+
+  onGetIsNotInterested = () => {
+    return storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) || [];
+  };
 
   onChange = (e, index = null) => {
     const name = e.target.name;
@@ -43,12 +42,9 @@ class ProductPage extends React.Component {
   onFilter = () => {
     let filterProducts = this.state.products;
     const isChecked = this.state.selectedBrands.some(p => p.selected === true);
-    const notInterested =
-      storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) === null
-        ? []
-        : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM);
-    if (this.state.isInterested && notInterested) {
-      filterProducts = filterProducts.filter(product => !notInterested.some(notPro => product.title === notPro.title));
+
+    if (this.state.isInterested && this.onGetIsNotInterested()) {
+      filterProducts = filterProducts.filter(product => !this.onGetIsNotInterested().some(notPro => product.title === notPro.title));
     }
     if (isChecked) {
       filterProducts = filterProducts.filter(product => {
@@ -69,7 +65,7 @@ class ProductPage extends React.Component {
   };
 
   isBlock = item => {
-    return this.state.notInterested.some(product => product.title === item.title);
+    return this.onGetIsNotInterested().some(product => product.title === item.title);
   };
 
   onClick = item => {
@@ -82,7 +78,7 @@ class ProductPage extends React.Component {
 
   generateRandomItem = item => {
     let num = Math.floor(Math.random() * data.length);
-    return num === data.findIndex(i => i.title === item.title) && data.filter(item => this.state.notInterested.includes(item))
+    return num === data.findIndex(i => i.title === item.title) && data.filter(item => this.onGetIsNotInterested().includes(item))
       ? this.generateRandomItem(item)
       : data[num];
   };
@@ -97,12 +93,9 @@ class ProductPage extends React.Component {
   };
 
   onSetNotInterestedItem = item => {
-    this.setState(pre => {
-      const timeStamp = new Date().setHours(24, 0, 0, 0);
-      const notInterested = pre.notInterested.concat({ ...item, timeStamp });
-      storagePropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, notInterested);
-      return { notInterested };
-    });
+    const timeStamp = new Date().setHours(24, 0, 0, 0);
+    const withTimeStamp = this.onGetIsNotInterested().concat({ ...item, timeStamp });
+    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, withTimeStamp);
 
     this.onGetRandomItem(item);
   };
@@ -129,7 +122,6 @@ class ProductPage extends React.Component {
               />
             )}
           ></Route>
-
           <Route
             path="/product"
             render={routeProps => (
