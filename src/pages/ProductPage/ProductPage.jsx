@@ -232,7 +232,7 @@ class ProductPage extends React.Component {
           render={routeProps => (
             <ProductDetailPage
               isBlock={this.isBlock}
-              target={this.state.target}
+              target={this.state.target || this.onGetStorageItem(STORAGE_KEY_NAMES.SELECTED_ITEM)}
               notInterested={this.state.notInterested}
               onSetNotInterestedItem={this.onSetNotInterestedItem}
               onGetRandomItem={this.onGetRandomItem}
