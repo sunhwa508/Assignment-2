@@ -1,13 +1,12 @@
 import React from "react";
 import shortid from "shortid";
-import { Link } from "react-router-dom";
 
 class RecentList extends React.PureComponent {
   constructor(props) {
     super(props);
   }
   render() {
-    const { selectedBrands, isInterested, onClick, isBlock } = this.props;
+    const { selectedBrands, isInterested, onClick } = this.props;
     return (
       <>
         {selectedBrands.map((selectedBrand, idx) => (
