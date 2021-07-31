@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   width: 70vw;
   min-height: 80px;
   align-items: center;
+
   & h2 {
     color: black;
   }

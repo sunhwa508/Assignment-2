@@ -1,5 +1,7 @@
 # 프리온보딩 Assignment 2 - [Mr.Camel]
 
+![화면 기록 2021-07-31 오후 9 28 28](https://user-images.githubusercontent.com/61695175/127740017-3e1fd83e-b5c6-4268-a1aa-d8162c1d6bb3.gif)
+
 ## 1. 과제 구현 목록 (팀원별)
 
 **선주**
@@ -56,3 +58,7 @@
   (storage를 쉽게 사용할 수 있는 utils manager)
 
 ### 4.배포
+
+Netlify 무료배포 사이트를 아용하였습니다.
+
+> https://610532aaac0828cda734dcc9--nervous-leavitt-1351b7.netlify.app/

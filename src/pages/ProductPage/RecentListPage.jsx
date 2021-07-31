@@ -59,6 +59,7 @@ export class RecentListPage extends React.Component {
             <label htmlFor="lowPriced">낮은 가격순</label>
           </div>
         </Modal>
+
         <Layout>
           <FilterBar onOpenModal={this.onOpenModal} isInterested={isInterested} selectedBrands={selectedBrands} onChange={onChange} />
           <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} isBlock={this.props.isBlock} />
