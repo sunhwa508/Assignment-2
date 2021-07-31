@@ -3,6 +3,13 @@ import * as Styled from "./ProductDetails.styles";
 import { Layout } from "../../layout/layout";
 
 export class ProductDetailPage extends React.Component {
+  constructor(props) {
+    super(props);
+    if (Array.isArray(this.props.target)) {
+      this.props.history.push("/recentList");
+    }
+  }
+
   componentDidMount() {
     if (this.props.target && this.props.isBlock(this.props.target)) {
       alert("경고 메세지");

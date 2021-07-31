@@ -11,7 +11,7 @@ class ProductPage extends React.Component {
     super(props);
     this.state = {
       products: data,
-      target: null,
+      target: this.onGetStorageItem(STORAGE_KEY_NAMES.SELECTED_ITEM) || null,
       selectedBrands: this.makeBrands(data),
       isInterested: false,
       timeStamp: new Date().setHours(24, 0, 0, 0),
@@ -232,7 +232,7 @@ class ProductPage extends React.Component {
           render={routeProps => (
             <ProductDetailPage
               isBlock={this.isBlock}
-              target={this.state.target || this.onGetStorageItem(STORAGE_KEY_NAMES.SELECTED_ITEM)}
+              target={this.state.target}
               notInterested={this.state.notInterested}
               onSetNotInterestedItem={this.onSetNotInterestedItem}
               onGetRandomItem={this.onGetRandomItem}
