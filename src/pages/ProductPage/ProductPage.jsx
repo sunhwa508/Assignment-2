@@ -235,7 +235,6 @@ class ProductPage extends React.Component {
               target={this.state.target}
               notInterested={this.state.notInterested}
               onSetNotInterestedItem={this.onSetNotInterestedItem}
-              onGetStorageItem={this.onGetStorageItem}
               onGetRandomItem={this.onGetRandomItem}
               {...routeProps}
             />

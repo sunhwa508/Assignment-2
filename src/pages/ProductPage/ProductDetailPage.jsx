@@ -1,7 +1,6 @@
 import React from "react";
 import * as Styled from "./ProductDetails.styles";
 import { Layout } from "../../layout/layout";
-import { STORAGE_KEY_NAMES } from "../../constants";
 
 export class ProductDetailPage extends React.Component {
   componentDidMount() {
@@ -12,8 +11,8 @@ export class ProductDetailPage extends React.Component {
   }
 
   render() {
-    const { onGetStorageItem } = this.props;
-    const target = onGetStorageItem(STORAGE_KEY_NAMES.SELECTED_ITEM);
+    const { target } = this.props;
+
     return (
       <Layout>
         <Styled.Wrapper>
