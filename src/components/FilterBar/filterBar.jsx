@@ -8,7 +8,7 @@ class FilterBar extends React.Component {
   }
 
   render() {
-    const { selectedBrands, isInterested, onChange } = this.props;
+    const { selectedBrands, isInterested, onChange, onOpenModal } = this.props;
 
     return (
       <Styled.Wrapper>
@@ -33,7 +33,7 @@ class FilterBar extends React.Component {
           }}
           text={"관심없는 상품 숨기기"}
         />
-        <button>정렬</button>
+        <button onClick={onOpenModal}>정렬</button>
       </Styled.Wrapper>
     );
   }

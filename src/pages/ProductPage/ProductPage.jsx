@@ -16,6 +16,11 @@ class ProductPage extends React.Component {
       selectedBrands: this.makeBrands(data),
       isInterested: false,
       timeStamp: new Date().setHours(24, 0, 0, 0),
+      radioGroup: {
+        notSelected: false,
+        lastViewed: false,
+        lowPriced: false,
+      },
     };
   }
 
@@ -57,6 +62,22 @@ class ProductPage extends React.Component {
     }
 
     return filterProducts;
+  };
+
+  handleRadio = e => {
+    let radioGroup = {};
+
+    this.setState(pre => {
+      const preradioGroup = {
+        ...pre.radioGroup,
+      };
+      radioGroup = Object.fromEntries(Object.entries(preradioGroup).map(([key, val]) => [key, false]));
+      radioGroup[e.target.value] = e.target.checked;
+      return {
+        ...pre,
+        radioGroup,
+      };
+    });
   };
 
   makeBrands = products => {
@@ -147,6 +168,8 @@ class ProductPage extends React.Component {
                 abc={filterProducts}
                 onClick={this.onClick}
                 onSetCheckedItem={this.onSetCheckedItem}
+                radioGroup={this.state.radioGroup}
+                handleRadio={this.handleRadio}
                 {...routeProps}
               />
             )}
