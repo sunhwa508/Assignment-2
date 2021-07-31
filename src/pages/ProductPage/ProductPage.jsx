@@ -8,26 +8,21 @@ import { STORAGE_KEY_NAMES } from "../../constants";
 import { Layout } from "../../layout/layout";
 import { RecentListPage } from "./RecentListPage";
 import { ProductDetailPage } from "./ProductDetailPage";
-import { ProductListPage } from "./ProductListPage";
 
 class ProductPage extends React.Component {
   constructor(props) {
-    console.log(STORAGE_KEY_NAMES);
     super(props);
     this.state = {
       products: data,
       target: null,
       selectedBrands: this.makeBrands(data),
       isInterested: false,
-      recentClicked:
-        storagePropsManager.getItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED) === null
-          ? []
-          : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED),
+      timeStamp: new Date().setHours(24, 0, 0, 0),
     };
   }
 
-  onGetIsNotInterested = () => {
-    return storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM) || [];
+  onGetStorageItem = key => {
+    return storagePropsManager.getItemProps(key) || [];
   };
 
   onChange = (e, index = null) => {
@@ -52,8 +47,10 @@ class ProductPage extends React.Component {
     let filterProducts = this.state.products;
     const isChecked = this.state.selectedBrands.some(p => p.selected === true);
 
-    if (this.state.isInterested && this.onGetIsNotInterested()) {
-      filterProducts = filterProducts.filter(product => !this.onGetIsNotInterested().some(notPro => product.title === notPro.title));
+    if (this.state.isInterested && this.onGetStorageItem(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM)) {
+      filterProducts = filterProducts.filter(
+        product => !this.onGetStorageItem(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM).some(notPro => product.title === notPro.title),
+      );
     }
     if (isChecked) {
       filterProducts = filterProducts.filter(product => {
@@ -74,7 +71,7 @@ class ProductPage extends React.Component {
   };
 
   isBlock = item => {
-    return this.onGetIsNotInterested().some(product => product.title === item.title);
+    return this.onGetStorageItem(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM).some(product => product.title === item.title);
   };
 
   onClick = item => {
@@ -87,7 +84,8 @@ class ProductPage extends React.Component {
 
   generateRandomItem = item => {
     let num = Math.floor(Math.random() * data.length);
-    return num === data.findIndex(i => i.title === item.title) && data.filter(item => this.onGetIsNotInterested().includes(item))
+    return num === data.findIndex(i => i.title === item.title) &&
+      data.filter(item => this.onGetStorageItem(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM).includes(item))
       ? this.generateRandomItem(item)
       : data[num];
   };
@@ -104,25 +102,34 @@ class ProductPage extends React.Component {
   };
 
   onSetNotInterestedItem = item => {
-    const timeStamp = new Date().setHours(24, 0, 0, 0);
-    const withTimeStamp = this.onGetIsNotInterested().concat({ ...item, timeStamp });
+    let timeStamp = this.state.timeStamp;
+    const withTimeStamp = this.onGetStorageItem(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM).concat({ ...item, timeStamp });
     storagePropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, withTimeStamp);
 
     this.onGetRandomItem(item);
   };
 
+  onCheckTime = storageKey => {
+    // 오늘 자정 시간 체크
+    let timeStamp = this.state.timeStamp;
+    const hasToFilter = this.onGetStorageItem(storageKey);
+    // 현재기준 자정 시간과 아이템 저장한시 자정시간과 다르면 하루가 지난것이므로 필터링으로 걸려줌
+    const filterOldData = hasToFilter.filter(item => timeStamp === item.timeStamp);
+    storagePropsManager.setItemProps(storageKey, filterOldData);
+  };
+
   onSetCheckedItem = item => {
-    console.log(item);
-    this.setState(pre => {
-      const timeStamp = new Date().setHours(24, 0, 0, 0);
-      const recentClicked = pre.recentClicked.concat([{ ...item, timeStamp }]);
-      storagePropsManager.setItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED, recentClicked);
-      return { recentClicked };
-    });
+    // 시간체크 후 초기화 작업
+    this.onCheckTime(STORAGE_KEY_NAMES.RECENT_CHECKED);
+    this.onCheckTime(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM);
+    let timeStamp = this.state.timeStamp;
+    const recentClicked = this.onGetStorageItem(STORAGE_KEY_NAMES.RECENT_CHECKED).concat([{ ...item, timeStamp }]);
+    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED, recentClicked);
   };
 
   render() {
     const filterProducts = this.onFilter();
+
     return (
       <>
         <Switch>
@@ -156,10 +163,6 @@ class ProductPage extends React.Component {
                 {...routeProps}
               />
             )}
-          ></Route>
-          <Route
-            path="/list"
-            render={routeProps => <ProductListPage onClick={this.onClick} products={this.state.products} {...routeProps} />}
           ></Route>
         </Switch>
       </>

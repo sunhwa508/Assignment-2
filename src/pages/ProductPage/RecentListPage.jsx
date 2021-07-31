@@ -1,16 +1,15 @@
 import React from "react";
-import shortid from "shortid";
 import { Modal } from "../../components/Modal/Modal";
 import { CheckBox } from "../../components/CheckBox/checkBox";
-import { Item } from "../../components/Item/item";
 import * as Styled from "../../components/RecentList/recentList.styles";
+import { ProductList, FilterBar } from "../../components";
 
 export class RecentListPage extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const { selectedBrands, isInterested, onClick } = this.props;
+    const { selectedBrands, isInterested, onClick, onChange } = this.props;
     return (
       <>
         <Modal>
@@ -23,7 +22,7 @@ export class RecentListPage extends React.Component {
             <option value="mango">Mango</option>
           </select>
         </Modal>
-        <Styled.Wrapper>
+        {/* <Styled.Wrapper>
           {selectedBrands.map((selectedBrand, idx) => (
             <CheckBox
               key={idx}
@@ -46,21 +45,9 @@ export class RecentListPage extends React.Component {
             text={"관심없는 상품 숨기기"}
           />
           <button>정렬</button>
-        </Styled.Wrapper>
-
-        <Styled.ItemWrapper>
-          {this.props.abc.map(item => (
-            <div key={shortid.generate()}>
-              <Item
-                onClick={() => {
-                  onClick(item);
-                  this.props.onSetCheckedItem(item);
-                }}
-                item={item}
-              />
-            </div>
-          ))}
-        </Styled.ItemWrapper>
+        </Styled.Wrapper> */}
+        <FilterBar isInterested={isInterested} selectedBrands={selectedBrands} onChange={onChange} />
+        <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} />
       </>
     );
   }
