@@ -1,15 +1,13 @@
 import React from "react";
 import shortid from "shortid";
 import { Link } from "react-router-dom";
-import { storagePropsManager } from "../../config/storageManager";
-import { STORAGE_KEY_NAMES } from "../../constants";
 
 class RecentList extends React.PureComponent {
   constructor(props) {
     super(props);
   }
   render() {
-    const { selectedBrands, isInterested, onClick, isBlock } = this.props;
+    const { selectedBrands, isInterested, onClick } = this.props;
 
     return (
       <>

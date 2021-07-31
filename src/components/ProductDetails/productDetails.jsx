@@ -1,5 +1,5 @@
 import React from "react";
-import { storagePropsManager } from "../../config/storageManager";
+import { storagePropsManager } from "../../utils/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
 import * as Styled from "./ProductDetails.styles";
 
@@ -12,21 +12,21 @@ class ProductDetails extends React.Component {
   }
 
   render() {
-    const selectedItem = storagePropsManager.getItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM);
+    const { target } = this.props;
 
     return (
       <Styled.Wrapper>
         {/* 임시이미지 ( 추후 변경예정 ) */}
-        <img src="https://cdn.pixabay.com/photo/2016/03/27/19/31/fashion-1283863_960_720.jpg" alt={selectedItem.title} />
+        <img src="https://cdn.pixabay.com/photo/2016/03/27/19/31/fashion-1283863_960_720.jpg" alt={target.title} />
         <div>
-          <h2>{selectedItem.title}</h2>
-          <h4>{selectedItem.brand}</h4>
-          <h4>{selectedItem.price}</h4>
+          <h2>{target.title}</h2>
+          <h4>{target.brand}</h4>
+          <h4>{target.price}</h4>
         </div>
-        <button onClick={() => this.props.onGetRandomItem(selectedItem)}>
+        <button onClick={() => this.props.onGetRandomItem(target)}>
           <span>랜덤상품조회</span>
         </button>
-        <button onClick={() => this.props.onSetNotInterestedItem(selectedItem)}>
+        <button onClick={() => this.props.onSetNotInterestedItem(target)}>
           <span>관심없음</span>
         </button>
       </Styled.Wrapper>

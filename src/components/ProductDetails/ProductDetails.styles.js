@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
     & h2 {
       width: 70%;
       margin-bottom: 10px;
-      height: 70px;
+      height: 90px;
     }
   }
   & img {
