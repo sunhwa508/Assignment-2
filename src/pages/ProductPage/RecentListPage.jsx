@@ -1,5 +1,4 @@
 import React from "react";
-
 import { ProductList, FilterBar, Modal } from "../../components";
 import { Layout } from "../../layout/layout";
 
@@ -62,7 +61,7 @@ export class RecentListPage extends React.Component {
         </Modal>
         <Layout>
           <FilterBar onOpenModal={this.onOpenModal} isInterested={isInterested} selectedBrands={selectedBrands} onChange={onChange} />
-          <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} />
+          <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} isBlock={this.props.isBlock} />
         </Layout>
       </>
     );

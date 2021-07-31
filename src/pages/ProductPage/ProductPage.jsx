@@ -61,7 +61,10 @@ class ProductPage extends React.Component {
   };
 
   onFilter = () => {
+    this.onCheckTime(STORAGE_KEY_NAMES.RECENT_CHECKED);
+    this.onCheckTime(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM);
     let filterProducts = this.state.products;
+    filterProducts = this.onSort(filterProducts);
     const isChecked = this.state.selectedBrands.some(p => p.selected === true);
 
     if (this.state.isInterested && this.onGetStorageItem(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM)) {
@@ -76,6 +79,42 @@ class ProductPage extends React.Component {
     }
 
     return filterProducts;
+  };
+
+  onGetLastViewedProduts = () => {
+    return this.onGetStorageItem(STORAGE_KEY_NAMES.RECENT_CHECKED);
+  };
+
+  onSort = filterProducts => {
+    let sortCondition;
+    const sortNames = this.state.radioGroup;
+    for (const name in sortNames) {
+      if (sortNames[name] === true) {
+        sortCondition = name;
+        break;
+      }
+    }
+
+    let sortedProducts;
+    let recentProducts;
+    let restProducts;
+
+    switch (sortCondition) {
+      case "lastViewed":
+        recentProducts = this.onGetLastViewedProduts().reverse();
+        restProducts = filterProducts.filter(p => (recentProducts ? recentProducts.every(rp => rp.title !== p.title) : true));
+        sortedProducts = [...recentProducts, ...restProducts];
+        break;
+      case "lowPriced":
+        sortedProducts = filterProducts.sort((a, b) => {
+          return a.price - b.price;
+        });
+        break;
+      default:
+        sortedProducts = filterProducts;
+        break;
+    }
+    return sortedProducts;
   };
 
   handleRadio = e => {
@@ -104,6 +143,8 @@ class ProductPage extends React.Component {
   };
 
   isBlock = item => {
+    this.onCheckTime(STORAGE_KEY_NAMES.RECENT_CHECKED);
+    this.onCheckTime(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM);
     return this.onGetStorageItem(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM).some(product => product.title === item.title);
   };
 
@@ -116,6 +157,8 @@ class ProductPage extends React.Component {
   };
 
   generateRandomItem = item => {
+    this.onCheckTime(STORAGE_KEY_NAMES.RECENT_CHECKED);
+    this.onCheckTime(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM);
     let num = Math.floor(Math.random() * data.length);
     return num === data.findIndex(i => i.title === item.title) &&
       data.filter(item => this.onGetStorageItem(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM).includes(item))
