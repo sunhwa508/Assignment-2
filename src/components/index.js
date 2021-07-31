@@ -4,3 +4,4 @@ export { RecentList } from "./RecentList/recentList";
 export { Footer } from "./Footer/footer";
 export { CheckBox } from "./CheckBox/checkBox";
 export { Item } from "./Item/item";
+export { Card } from "./Card/Card";
