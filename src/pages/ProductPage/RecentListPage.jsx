@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "../../components/Modal/Modal";
-import { ProductList, FilterBar } from "../../components";
+import { ProductList, FilterBar, Header } from "../../components";
+import { Layout } from "../../layout/layout";
 
 export class RecentListPage extends React.Component {
   constructor(props) {
@@ -33,36 +34,36 @@ export class RecentListPage extends React.Component {
       <>
         <Modal close={this.onCloseModal} isOpen={this.state.isOpen}>
           <div>
-            <div>
-              <input
-                id="notSelected"
-                type="radio"
-                onChange={handleRadio}
-                checked={radioGroup["notSelected"]}
-                name="radioGroup"
-                value="notSelected"
-              ></input>
-              <label htmlFor="notSelected">선택 안함</label>
-            </div>
-            <div>
-              <input
-                id="lastViewed"
-                type="radio"
-                onChange={handleRadio}
-                checked={radioGroup["lastViewed"]}
-                name="radioGroup"
-                value="lastViewed"
-              ></input>
-              <label htmlFor="lastViewed">최근 조회순</label>
-            </div>
-            <div>
-              <input id="lowPriced" type="radio" onChange={handleRadio} checked={radioGroup["lowPriced"]} name="radioGroup" value="lowPriced"></input>
-              <label htmlFor="lowPriced">낮은 가격순</label>
-            </div>
+            <input
+              id="notSelected"
+              type="radio"
+              onChange={handleRadio}
+              checked={radioGroup["notSelected"]}
+              name="radioGroup"
+              value="notSelected"
+            ></input>
+            <label htmlFor="notSelected">선택 안함</label>
+          </div>
+          <div>
+            <input
+              id="lastViewed"
+              type="radio"
+              onChange={handleRadio}
+              checked={radioGroup["lastViewed"]}
+              name="radioGroup"
+              value="lastViewed"
+            ></input>
+            <label htmlFor="lastViewed">최근 조회순</label>
+          </div>
+          <div>
+            <input id="lowPriced" type="radio" onChange={handleRadio} checked={radioGroup["lowPriced"]} name="radioGroup" value="lowPriced"></input>
+            <label htmlFor="lowPriced">낮은 가격순</label>
           </div>
         </Modal>
-        <FilterBar onOpenModal={this.onOpenModal} isInterested={isInterested} selectedBrands={selectedBrands} onChange={onChange} />
-        <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} />
+        <Layout>
+          <FilterBar onOpenModal={this.onOpenModal} isInterested={isInterested} selectedBrands={selectedBrands} onChange={onChange} />
+          <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} />
+        </Layout>
       </>
     );
   }

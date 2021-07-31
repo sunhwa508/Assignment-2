@@ -33,7 +33,10 @@ class FilterBar extends React.Component {
           }}
           text={"관심없는 상품 숨기기"}
         />
-        <button onClick={onOpenModal}>정렬</button>
+
+        <button onClick={onOpenModal}>
+          <img src="https://image.flaticon.com/icons/png/512/162/162735.png" />
+        </button>
       </Styled.Wrapper>
     );
   }

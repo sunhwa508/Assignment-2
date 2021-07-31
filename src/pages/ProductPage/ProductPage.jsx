@@ -1,11 +1,11 @@
 import React from "react";
-import { RecentList } from "../../components";
 import { Route, Switch, Redirect } from "react-router-dom";
 import data from "../../assets/data.json";
 import { storagePropsManager } from "../../utils/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
 import { RecentListPage } from "./RecentListPage";
 import { ProductDetailPage } from "./ProductDetailPage";
+import { Layout } from "../../layout/layout";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -21,8 +21,23 @@ class ProductPage extends React.Component {
         lastViewed: false,
         lowPriced: false,
       },
+      isOpen: false,
     };
   }
+
+  onOpenModal = () => {
+    this.setState(pre => ({
+      ...pre,
+      isOpen: true,
+    }));
+  };
+
+  onCloseModal = () => {
+    this.setState(pre => ({
+      ...pre,
+      isOpen: false,
+    }));
+  };
 
   onGetStorageItem = key => {
     return storagePropsManager.getItemProps(key) || [];
@@ -129,10 +144,8 @@ class ProductPage extends React.Component {
   };
 
   onCheckTime = storageKey => {
-    // 오늘 자정 시간 체크
     let timeStamp = this.state.timeStamp;
     const hasToFilter = this.onGetStorageItem(storageKey);
-    // 현재기준 자정 시간과 아이템 저장한시 자정시간과 다르면 하루가 지난것이므로 필터링으로 걸려줌
     const filterOldData = hasToFilter.filter(item => timeStamp === item.timeStamp);
     storagePropsManager.setItemProps(storageKey, filterOldData);
   };
@@ -152,43 +165,41 @@ class ProductPage extends React.Component {
     const filterProducts = this.onFilter();
 
     return (
-      <>
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/recentList" />
-          </Route>
-          <Route
-            path="/recentList"
-            render={routeProps => (
-              <RecentListPage
-                isBlock={this.isBlock}
-                onChange={this.onChange}
-                isInterested={this.state.isInterested}
-                selectedBrands={this.state.selectedBrands}
-                abc={filterProducts}
-                onClick={this.onClick}
-                onSetCheckedItem={this.onSetCheckedItem}
-                radioGroup={this.state.radioGroup}
-                handleRadio={this.handleRadio}
-                {...routeProps}
-              />
-            )}
-          ></Route>
-          <Route
-            path="/product"
-            render={routeProps => (
-              <ProductDetailPage
-                isBlock={this.isBlock}
-                target={this.state.target}
-                notInterested={this.state.notInterested}
-                onSetNotInterestedItem={this.onSetNotInterestedItem}
-                onGetRandomItem={this.onGetRandomItem}
-                {...routeProps}
-              />
-            )}
-          ></Route>
-        </Switch>
-      </>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/recentList" />
+        </Route>
+        <Route
+          path="/recentList"
+          render={routeProps => (
+            <RecentListPage
+              isBlock={this.isBlock}
+              onChange={this.onChange}
+              isInterested={this.state.isInterested}
+              selectedBrands={this.state.selectedBrands}
+              abc={filterProducts}
+              onClick={this.onClick}
+              onSetCheckedItem={this.onSetCheckedItem}
+              radioGroup={this.state.radioGroup}
+              handleRadio={this.handleRadio}
+              {...routeProps}
+            />
+          )}
+        ></Route>
+        <Route
+          path="/product"
+          render={routeProps => (
+            <ProductDetailPage
+              isBlock={this.isBlock}
+              target={this.state.target}
+              notInterested={this.state.notInterested}
+              onSetNotInterestedItem={this.onSetNotInterestedItem}
+              onGetRandomItem={this.onGetRandomItem}
+              {...routeProps}
+            />
+          )}
+        ></Route>
+      </Switch>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Header } from "../components";
 
 const BaseLayout = styled.div`
   display: flex;
@@ -10,7 +11,14 @@ const BaseLayout = styled.div`
 
 class Layout extends React.Component {
   render() {
-    return <BaseLayout>{this.props.children}</BaseLayout>;
+    return (
+      <>
+        <BaseLayout>
+          <Header />
+          {this.props.children}
+        </BaseLayout>
+      </>
+    );
   }
 }
 
