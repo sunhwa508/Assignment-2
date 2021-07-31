@@ -1,6 +1,7 @@
 import React from "react";
 import * as Styled from "./filterBar.styles";
 import { CheckBox } from "../CheckBox/checkBox";
+import shortid from "shortid";
 
 class FilterBar extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class FilterBar extends React.Component {
       <Styled.Wrapper>
         {selectedBrands.map((selectedBrand, idx) => (
           <CheckBox
-            key={idx}
+            key={shortid.generate()}
             id={idx}
             name={"selectedBrands"}
             checked={selectedBrand.selected}

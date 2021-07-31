@@ -1,5 +1,4 @@
 import React from "react";
-import { RecentList } from "../../components";
 import { Route, Switch, Redirect } from "react-router-dom";
 import data from "../../assets/data.json";
 import { storagePropsManager } from "../../utils/storageManager";
