@@ -3,7 +3,7 @@ import { RecentList } from "../../components";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ProductDetails } from "../../components";
 import data from "../../assets/data.json";
-import { storagePropsManager } from "../../config/storageManager";
+import { storagePropsManager } from "../../utils/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
 
 class ProductPage extends React.Component {

@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  margin-bottom: 20px;
 
   & input {
     display: flex;
@@ -15,13 +14,12 @@ export const Wrapper = styled.div`
     border: 0.8px solid black;
     align-items: center;
     margin: 0 10px;
-    border-radius: 8px;
+    border-radius: 10px;
   }
 `;
 
 export const Span = styled.span`
   font-size: 20px;
-  border-right: 1px solid black;
   padding: 5px;
   border-radius: 8px;
   background-color: ${props => (props.OnTagSelected ? "#8977ad" : "white")};

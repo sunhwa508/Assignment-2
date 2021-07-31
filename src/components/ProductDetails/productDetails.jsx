@@ -1,5 +1,5 @@
 import React from "react";
-import { storagePropsManager } from "../../config/storageManager";
+import { storagePropsManager } from "../../utils/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
 import * as Styled from "./ProductDetails.styles";
 
