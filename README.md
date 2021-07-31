@@ -1,6 +1,6 @@
 # 프리온보딩 Assignment 2 - [Mr.Camel]
 
-![화면 기록 2021-07-31 오후 9 28 28](https://user-images.githubusercontent.com/61695175/127740017-3e1fd83e-b5c6-4268-a1aa-d8162c1d6bb3.gif)
+![화면 기록 2021-07-31 오후 9 28 28](https://user-images.githubusercontent.com/61695175/127740264-4d913fd1-d365-4105-ac42-b5770e46ca6b.gif)
 
 ## 1. 과제 구현 목록 (팀원별)
 
