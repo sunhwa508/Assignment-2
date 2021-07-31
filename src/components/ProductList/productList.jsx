@@ -8,7 +8,7 @@ class ProductList extends React.Component {
   }
 
   render() {
-    const { abc, onClick, onSetCheckedItem } = this.props;
+    const { abc, onClick, onSetCheckedItem, isBlock } = this.props;
 
     return (
       <Styled.ItemWrapper>
@@ -17,6 +17,7 @@ class ProductList extends React.Component {
             <Item
               onClick={() => {
                 onClick(item);
+                if (isBlock(item)) return;
                 onSetCheckedItem(item);
               }}
               item={item}

@@ -62,7 +62,7 @@ export class RecentListPage extends React.Component {
           </div>
         </Modal>
         <FilterBar onOpenModal={this.onOpenModal} isInterested={isInterested} selectedBrands={selectedBrands} onChange={onChange} />
-        <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} />
+        <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} isBlock={this.props.isBlock} />
       </>
     );
   }
