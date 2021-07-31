@@ -1,9 +1,6 @@
 import React from "react";
-import shortid from "shortid";
 import { Modal } from "../../components/Modal/Modal";
-import { CheckBox } from "../../components/CheckBox/checkBox";
-import { Item } from "../../components/Item/item";
-import * as Styled from "../../components/RecentList/recentList.styles";
+import { ProductList, FilterBar } from "../../components";
 
 export class RecentListPage extends React.Component {
   constructor(props) {
@@ -30,7 +27,8 @@ export class RecentListPage extends React.Component {
   };
 
   render() {
-    const { selectedBrands, isInterested, onClick, radioGroup, handleRadio } = this.props;
+    const { selectedBrands, isInterested, onClick, radioGroup, handleRadio, onChange } = this.props;
+
     return (
       <>
         <Modal close={this.onCloseModal} isOpen={this.state.isOpen}>
@@ -63,44 +61,8 @@ export class RecentListPage extends React.Component {
             </div>
           </div>
         </Modal>
-        <Styled.Wrapper>
-          {selectedBrands.map((selectedBrand, idx) => (
-            <CheckBox
-              key={idx}
-              id={idx}
-              name={"selectedBrands"}
-              checked={selectedBrand.selected}
-              onChange={e => {
-                this.props.onChange(e, idx);
-              }}
-              text={selectedBrand.brandName}
-            />
-          ))}
-          <CheckBox
-            id={"isInterested"}
-            name={"isInterested"}
-            checked={isInterested}
-            onChange={e => {
-              this.props.onChange(e);
-            }}
-            text={"관심없는 상품 숨기기"}
-          />
-          <button onClick={this.onOpenModal}>정렬</button>
-        </Styled.Wrapper>
-
-        <Styled.ItemWrapper>
-          {this.props.abc.map(item => (
-            <div key={shortid.generate()}>
-              <Item
-                onClick={() => {
-                  onClick(item);
-                  this.props.onSetCheckedItem(item);
-                }}
-                item={item}
-              />
-            </div>
-          ))}
-        </Styled.ItemWrapper>
+        <FilterBar onOpenModal={this.onOpenModal} isInterested={isInterested} selectedBrands={selectedBrands} onChange={onChange} />
+        <ProductList abc={this.props.abc} onClick={onClick} onSetCheckedItem={this.props.onSetCheckedItem} />
       </>
     );
   }

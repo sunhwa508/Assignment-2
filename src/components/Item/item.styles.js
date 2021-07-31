@@ -2,14 +2,13 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
   max-width: 250px;
-  margin: 20px;
-  justify-content: center;
-  align-items: center;
+  margin: 20px 10px;
   text-align: center;
+
   & div {
+    display: flex;
+    flex-direction: column;
     height: 70px;
   }
   & img {
@@ -18,6 +17,7 @@ export const Wrapper = styled.div`
   & p {
     margin: 10px 0;
     color: black;
+
     &:first-child {
       height: 40px;
     }
