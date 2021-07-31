@@ -12,10 +12,13 @@ export const ModalWrapper = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  z-index: 10;
+  z-index: 101;
   padding: 30px;
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
   background-color: white;
   border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

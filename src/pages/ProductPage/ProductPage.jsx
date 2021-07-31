@@ -8,7 +8,6 @@ import { STORAGE_KEY_NAMES } from "../../constants";
 import { Layout } from "../../layout/layout";
 import { RecentListPage } from "./RecentListPage";
 import { ProductDetailPage } from "./ProductDetailPage";
-import { ProductListPage } from "./ProductListPage";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -23,6 +22,11 @@ class ProductPage extends React.Component {
         storagePropsManager.getItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED) === null
           ? []
           : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED),
+      radioGroup: {
+        notSelected: false,
+        lastViewed: false,
+        lowPriced: false,
+      },
     };
   }
 
@@ -62,6 +66,22 @@ class ProductPage extends React.Component {
     }
 
     return filterProducts;
+  };
+
+  handleRadio = e => {
+    let radioGroup = {};
+
+    this.setState(pre => {
+      const preradioGroup = {
+        ...pre.radioGroup,
+      };
+      radioGroup = Object.fromEntries(Object.entries(preradioGroup).map(([key, val]) => [key, false]));
+      radioGroup[e.target.value] = e.target.checked;
+      return {
+        ...pre,
+        radioGroup,
+      };
+    });
   };
 
   makeBrands = products => {
@@ -140,6 +160,8 @@ class ProductPage extends React.Component {
                 abc={filterProducts}
                 onClick={this.onClick}
                 onSetCheckedItem={this.onSetCheckedItem}
+                radioGroup={this.state.radioGroup}
+                handleRadio={this.handleRadio}
                 {...routeProps}
               />
             )}
