@@ -9,6 +9,7 @@ import { Layout } from "../../layout/layout";
 
 class ProductPage extends React.Component {
   constructor(props) {
+    console.log(STORAGE_KEY_NAMES);
     super(props);
     this.state = {
       products: data,
@@ -19,6 +20,10 @@ class ProductPage extends React.Component {
           : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM),
       selectedBrands: this.makeBrands(data),
       isInterested: false,
+      recentClicked:
+        storagePropsManager.getItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED) === null
+          ? []
+          : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED),
     };
   }
 
@@ -88,12 +93,14 @@ class ProductPage extends React.Component {
   };
 
   onGetRandomItem = item => {
+    const randomItem = this.generateRandomItem(item);
     this.setState(pre => ({
       ...pre,
-      target: this.generateRandomItem(item),
+      target: randomItem,
     }));
 
-    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, this.generateRandomItem(item));
+    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, randomItem);
+    this.onSetCheckedItem(randomItem);
   };
 
   onSetNotInterestedItem = item => {
@@ -103,8 +110,17 @@ class ProductPage extends React.Component {
       storagePropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, notInterested);
       return { notInterested };
     });
-
     this.onGetRandomItem(item);
+  };
+
+  onSetCheckedItem = item => {
+    console.log(item);
+    this.setState(pre => {
+      const timeStamp = new Date().setHours(24, 0, 0, 0);
+      const recentClicked = pre.recentClicked.concat([{ ...item, timeStamp }]);
+      storagePropsManager.setItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED, recentClicked);
+      return { recentClicked };
+    });
   };
 
   render() {
@@ -125,6 +141,7 @@ class ProductPage extends React.Component {
                 selectedBrands={this.state.selectedBrands}
                 abc={filterProducts}
                 onClick={this.onClick}
+                onSetCheckedItem={this.onSetCheckedItem}
                 {...routeProps}
               />
             )}
