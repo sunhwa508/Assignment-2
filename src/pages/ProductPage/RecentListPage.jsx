@@ -1,6 +1,6 @@
 import React from "react";
-import { Modal } from "../../components/Modal/Modal";
-import { ProductList, FilterBar, Header } from "../../components";
+
+import { ProductList, FilterBar, Modal } from "../../components";
 import { Layout } from "../../layout/layout";
 
 export class RecentListPage extends React.Component {

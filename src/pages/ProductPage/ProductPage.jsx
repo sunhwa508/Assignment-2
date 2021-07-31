@@ -5,7 +5,6 @@ import { storagePropsManager } from "../../utils/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
 import { RecentListPage } from "./RecentListPage";
 import { ProductDetailPage } from "./ProductDetailPage";
-import { Layout } from "../../layout/layout";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -151,7 +150,6 @@ class ProductPage extends React.Component {
   };
 
   onSetCheckedItem = item => {
-    // 시간체크 후 초기화 작업
     this.onCheckTime(STORAGE_KEY_NAMES.RECENT_CHECKED);
     this.onCheckTime(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM);
 
