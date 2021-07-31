@@ -84,12 +84,13 @@ class ProductPage extends React.Component {
   };
 
   onGetRandomItem = item => {
+    const randomItem = this.generateRandomItem(item);
     this.setState(pre => ({
       ...pre,
-      target: this.generateRandomItem(item),
+      target: randomItem,
     }));
 
-    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, this.generateRandomItem(item));
+    storagePropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, randomItem);
   };
 
   onSetNotInterestedItem = item => {
