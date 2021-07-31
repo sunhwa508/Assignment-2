@@ -37,18 +37,9 @@ const getItemProps = storageKey => {
   return null;
 };
 
-/**
- * localStorage에 저장된 값 초기화
- * @param storageKey
- */
-const clearItemProps = storageKey => {
-  localStorage.removeItem(storageKey);
-};
-
 export const storagePropsManager = {
   convertItemProps,
   parseItemInfo,
-  clearItemProps,
   setItemProps,
   getItemProps,
 };

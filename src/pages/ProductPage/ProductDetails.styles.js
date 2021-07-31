@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 500px;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
 
   & div {
     display: flex;
@@ -12,13 +12,13 @@ export const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     & h2 {
       width: 70%;
       margin-bottom: 10px;
       height: 90px;
     }
   }
-
   & img {
     width: 500px;
   }
