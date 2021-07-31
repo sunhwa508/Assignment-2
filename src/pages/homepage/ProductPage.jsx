@@ -8,12 +8,17 @@ import { STORAGE_KEY_NAMES } from "../../constants";
 
 class ProductPage extends React.Component {
   constructor(props) {
+    console.log(STORAGE_KEY_NAMES);
     super(props);
     this.state = {
       products: data,
       target: null,
       selectedBrands: this.makeBrands(data),
       isInterested: false,
+      recentClicked:
+        storagePropsManager.getItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED) === null
+          ? []
+          : storagePropsManager.getItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED),
     };
   }
 
@@ -91,6 +96,8 @@ class ProductPage extends React.Component {
     }));
 
     storagePropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, randomItem);
+
+    this.onSetCheckedItem(randomItem);
   };
 
   onSetNotInterestedItem = item => {
@@ -99,6 +106,16 @@ class ProductPage extends React.Component {
     storagePropsManager.setItemProps(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM, withTimeStamp);
 
     this.onGetRandomItem(item);
+  };
+
+  onSetCheckedItem = item => {
+    console.log(item);
+    this.setState(pre => {
+      const timeStamp = new Date().setHours(24, 0, 0, 0);
+      const recentClicked = pre.recentClicked.concat([{ ...item, timeStamp }]);
+      storagePropsManager.setItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED, recentClicked);
+      return { recentClicked };
+    });
   };
 
   render() {
@@ -119,6 +136,7 @@ class ProductPage extends React.Component {
                 selectedBrands={this.state.selectedBrands}
                 abc={filterProducts}
                 onClick={this.onClick}
+                onSetCheckedItem={this.onSetCheckedItem}
                 {...routeProps}
               />
             )}

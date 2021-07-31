@@ -1,5 +1,6 @@
 import React from "react";
 import shortid from "shortid";
+import { Link } from "react-router-dom";
 
 class RecentList extends React.PureComponent {
   constructor(props) {
@@ -7,6 +8,7 @@ class RecentList extends React.PureComponent {
   }
   render() {
     const { selectedBrands, isInterested, onClick } = this.props;
+
     return (
       <>
         {selectedBrands.map((selectedBrand, idx) => (
@@ -40,6 +42,7 @@ class RecentList extends React.PureComponent {
               to="/product"
               onClick={() => {
                 onClick(item);
+                this.props.onSetCheckedItem(item);
               }}
             >
               {item.title}
