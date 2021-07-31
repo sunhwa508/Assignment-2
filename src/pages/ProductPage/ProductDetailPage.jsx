@@ -5,6 +5,7 @@ import { Layout } from "../../layout/layout";
 export class ProductDetailPage extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props.target)
     if (Array.isArray(this.props.target)) {
       this.props.history.push("/recentList");
     }
