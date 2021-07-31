@@ -18,6 +18,7 @@ export const Wrapper = styled.div`
       height: 90px;
     }
   }
+
   & img {
     width: 500px;
   }

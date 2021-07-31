@@ -12,7 +12,9 @@ class CheckBox extends React.Component {
       <Styled.Wrapper>
         <input onChange={onChange} key={key} id={id} type="checkbox" name={name} checked={checked} />
         <label htmlFor={id}>
-          <Styled.Span OnTagSelected={checked}>{text}</Styled.Span>
+          <Styled.Span OnTagSelected={checked} OnText={text}>
+            {checked && <span>✓</span>} {text}
+          </Styled.Span>
         </label>
       </Styled.Wrapper>
     );

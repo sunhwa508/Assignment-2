@@ -1,5 +1,5 @@
 import React from "react";
-import * as Styled from "../../components/ProductDetails/ProductDetails.styles";
+import * as Styled from "./ProductDetails.styles";
 
 export class ProductDetailPage extends React.Component {
   componentDidMount() {

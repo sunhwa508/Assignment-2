@@ -22,6 +22,7 @@ export const Span = styled.span`
   font-size: 20px;
   padding: 5px;
   border-radius: 8px;
-  background-color: ${props => (props.OnTagSelected ? "#8977ad" : "white")};
+  transition: 0.3s ease;
+  background-color: ${props => (props.OnTagSelected ? (props.OnText === "관심없는 상품 숨기기" ? "#8999ad" : "#8977ad") : "white")};
   color: ${props => (props.OnTagSelected ? "white" : "black")};
 `;

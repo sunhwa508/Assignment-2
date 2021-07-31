@@ -1,11 +1,9 @@
 import React from "react";
 import { RecentList } from "../../components";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { ProductDetails } from "../../components";
 import data from "../../assets/data.json";
 import { storagePropsManager } from "../../utils/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
-import { Layout } from "../../layout/layout";
 import { RecentListPage } from "./RecentListPage";
 import { ProductDetailPage } from "./ProductDetailPage";
 
@@ -122,8 +120,10 @@ class ProductPage extends React.Component {
     // 시간체크 후 초기화 작업
     this.onCheckTime(STORAGE_KEY_NAMES.RECENT_CHECKED);
     this.onCheckTime(STORAGE_KEY_NAMES.NOT_INTERESTED_ITEM);
+
     let timeStamp = this.state.timeStamp;
     const recentClicked = this.onGetStorageItem(STORAGE_KEY_NAMES.RECENT_CHECKED).concat([{ ...item, timeStamp }]);
+
     storagePropsManager.setItemProps(STORAGE_KEY_NAMES.RECENT_CHECKED, recentClicked);
   };
 
