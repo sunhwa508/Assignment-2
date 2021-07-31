@@ -1,4 +1,5 @@
 import React from "react";
+import shortid from "shortid";
 import * as Styled from "./checkBox.styles";
 
 class CheckBox extends React.Component {
