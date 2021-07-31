@@ -5,6 +5,10 @@ import { ProductDetails } from "../../components";
 import data from "../../assets/data.json";
 import { storagePropsManager } from "../../utils/storageManager";
 import { STORAGE_KEY_NAMES } from "../../constants";
+import { Layout } from "../../layout/layout";
+import { RecentListPage } from "./RecentListPage";
+import { ProductDetailPage } from "./ProductDetailPage";
+import { ProductListPage } from "./ProductListPage";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -96,7 +100,6 @@ class ProductPage extends React.Component {
     }));
 
     storagePropsManager.setItemProps(STORAGE_KEY_NAMES.SELECTED_ITEM, randomItem);
-
     this.onSetCheckedItem(randomItem);
   };
 
@@ -129,7 +132,7 @@ class ProductPage extends React.Component {
           <Route
             path="/recentList"
             render={routeProps => (
-              <RecentList
+              <RecentListPage
                 isBlock={this.isBlock}
                 onChange={this.onChange}
                 isInterested={this.state.isInterested}
@@ -144,7 +147,7 @@ class ProductPage extends React.Component {
           <Route
             path="/product"
             render={routeProps => (
-              <ProductDetails
+              <ProductDetailPage
                 isBlock={this.isBlock}
                 target={this.state.target}
                 notInterested={this.state.notInterested}
@@ -153,6 +156,10 @@ class ProductPage extends React.Component {
                 {...routeProps}
               />
             )}
+          ></Route>
+          <Route
+            path="/list"
+            render={routeProps => <ProductListPage onClick={this.onClick} products={this.state.products} {...routeProps} />}
           ></Route>
         </Switch>
       </>

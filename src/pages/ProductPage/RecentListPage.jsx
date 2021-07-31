@@ -1,14 +1,11 @@
 import React from "react";
 import shortid from "shortid";
-import * as Styled from "./recentList.styles";
-import { Link } from "react-router-dom";
-import { Modal } from "../Modal/Modal";
-import { Recent } from "./recentList.styles";
-import { Card } from "../Card/Card";
-import { CheckBox } from "../CheckBox/checkBox";
-import { Item } from "../Item/item";
+import { Modal } from "../../components/Modal/Modal";
+import { CheckBox } from "../../components/CheckBox/checkBox";
+import { Item } from "../../components/Item/item";
+import * as Styled from "../../components/RecentList/recentList.styles";
 
-class RecentList extends React.PureComponent {
+export class RecentListPage extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -16,6 +13,16 @@ class RecentList extends React.PureComponent {
     const { selectedBrands, isInterested, onClick } = this.props;
     return (
       <>
+        <Modal>
+          <select>
+            <option value="grapefruit">Grapefruit</option>
+            <option value="lime">Lime</option>
+            <option selected value="coconut">
+              Coconut
+            </option>
+            <option value="mango">Mango</option>
+          </select>
+        </Modal>
         <Styled.Wrapper>
           {selectedBrands.map((selectedBrand, idx) => (
             <CheckBox
@@ -38,6 +45,7 @@ class RecentList extends React.PureComponent {
             }}
             text={"관심없는 상품 숨기기"}
           />
+          <button>정렬</button>
         </Styled.Wrapper>
 
         <Styled.ItemWrapper>
@@ -53,10 +61,7 @@ class RecentList extends React.PureComponent {
             </div>
           ))}
         </Styled.ItemWrapper>
-        <Modal></Modal>
       </>
     );
   }
 }
-
-export { RecentList };

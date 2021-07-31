@@ -1,16 +1,18 @@
 import React from "react";
 import "./App.css";
 import { Header, Footer } from "./components";
-import ProductPage from "./pages/homepage/ProductPage";
+import ProductPage from "./pages/ProductPage/ProductPage";
 import { Layout } from "./layout/layout";
 class App extends React.Component {
   render() {
     return (
-      <Layout>
+      <>
+        {/* // <Layout> */}
         <Header />
         <ProductPage />
         {/* <Footer /> */}
-      </Layout>
+        {/* </Layout> */}
+      </>
     );
   }
 }
